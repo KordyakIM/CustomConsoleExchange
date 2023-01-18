@@ -1013,31 +1013,16 @@ $ListMTL.contextmenu = $Context
 								$CsvArray += $Object
 						        Remove-Variable Object
 						    }
-						#	Write-Host $CsvArray | ft
-						#    Return ,$CsvArray
 							$subject=$listMTL.FocusedItem.subitems[6].text
-#							$messageid=$ListMTL.FocusedItem.subitems[2].text
-								$SM = Search-Mailbox -Identity $ListMB1.CheckedItems.subitems[2].text -SearchQuery Subject:"$subject" -TargetMailbox "AdmExc@nornik.ru" -TargetFolder "MessageTrackingLog" -LogOnly | select ResultItemsCount
+								$SM = Search-Mailbox -Identity $ListMB1.CheckedItems.subitems[2].text -SearchQuery Subject:"$subject" -TargetMailbox "User@mail.ru" -TargetFolder "MessageTrackingLog" -LogOnly | select ResultItemsCount
 								if($SM.ResultItemsCount -eq "0"){
-#									$i=0
-#									foreach($Obj in $CsvArray){
-#										if($subject -eq $Obj.MessageSubject){
 										$ListMTL.FocusedItem.backcolor = "green"
 										$ListMTL.FocusedItem.forecolor = "black"
-#										}
-#										$i+=1
-#									}
 								}else{
-#									$i=0
-								Search-Mailbox -Identity $ListMB1.CheckedItems.subitems[2].text -SearchQuery Subject:"$subject" -TargetMailbox "AdmExc@nornik.ru" -TargetFolder "MessageTrackingLog" -LogLevel full -DeleteContent -confirm:$false -Force
-#							foreach($Obj in $CsvArray){
-#										if($subject -eq $Obj.MessageSubject){
+								Search-Mailbox -Identity $ListMB1.CheckedItems.subitems[2].text -SearchQuery Subject:"$subject" -TargetMailbox "User@mail.ru" -TargetFolder "MessageTrackingLog" -LogLevel full -DeleteContent -confirm:$false -Force
                                   [system.Windows.Forms.MessageBox]::Show("Письмо удалено!")
 										$ListMTL.FocusedItem.backcolor = "red"
 										$ListMTL.FocusedItem.forecolor = "black"
-#										}
-#										$i+=1
-#									}
 								}
 				}
 			}
@@ -1058,27 +1043,20 @@ $ListMTL.contextmenu = $Context
 									$CsvArray += $Object
 							        Remove-Variable Object
 							    }
-							#	Write-Host $CsvArray | ft
-							#    Return ,$CsvArray
 								$successful = @()
 								$recipients = @()
 								$subject = $listMTL.FocusedItem.subitems[6].text
-#								$messageid = $ListMTL.FocusedItem.subitems[2].text
 								$sender = $ListMTL.FocusedItem.subitems[4].text
 								$recipients = $ListMTL.FocusedItem.subitems[5].text
 								[string[]]$recipients = $recipients.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries) #создает из строкового значения массив
 								$recipients+=$sender
 								foreach ($recipient in $recipients){
-#								[system.Windows.Forms.MessageBox]::Show("$recipient" , "1")
-										$SM = Search-Mailbox -Identity $recipient -SearchQuery Subject:"$subject" -TargetMailbox "AdmExc@nornik.ru" -TargetFolder "MessageTrackingLog" -LogOnly | select ResultItemsCount
+										$SM = Search-Mailbox -Identity $recipient -SearchQuery Subject:"$subject" -TargetMailbox "User@mail.ru" -TargetFolder "MessageTrackingLog" -LogOnly | select ResultItemsCount
 									if($SM.ResultItemsCount -eq "0"){
 									}else{
-										Search-Mailbox -Identity $recipient -SearchQuery Subject:"$subject" -TargetMailbox "AdmExc@nornik.ru" -TargetFolder "MessageTrackingLog" -LogLevel full -DeleteContent -confirm:$false -Force
+										Search-Mailbox -Identity $recipient -SearchQuery Subject:"$subject" -TargetMailbox "User@mail.ru" -TargetFolder "MessageTrackingLog" -LogLevel full -DeleteContent -confirm:$false -Force
 										$successful = "red"
 									}
-#									$i=0
-#									foreach($Obj in $CsvArray){
-#										if($subject -eq $Obj.MessageSubject){
 											if($successful){
 												[system.Windows.Forms.MessageBox]::Show("$recipient" , "Письмо удалено!")
 												$ListMTL.FocusedItem.backcolor = "red"
@@ -1087,9 +1065,6 @@ $ListMTL.contextmenu = $Context
 												$ListMTL.FocusedItem.backcolor = "green"
 												$ListMTL.FocusedItem.forecolor = "black"
 											}
-#										}
-#									$i+=1
-#									}
 								}
 									
 						}
@@ -1108,24 +1083,13 @@ $ListMTL.contextmenu = $Context
 											$CsvArray += $Object
 									        Remove-Variable Object
 									    }
-									#	Write-Host $CsvArray | ft
-									#    Return ,$CsvArray
 										$subject=$listMTL.FocusedItem.subitems[6].text
 										$messageid=$ListMTL.FocusedItem.subitems[2].text
-											$SM = Search-Mailbox -Identity $ListMB1.CheckedItems.subitems[4].text -SearchQuery Subject:"$subject" -TargetMailbox "AdmExc@nornik.ru" -TargetFolder "MessageTrackingLog" -LogOnly | select ResultItemsCount
+											$SM = Search-Mailbox -Identity $ListMB1.CheckedItems.subitems[4].text -SearchQuery Subject:"$subject" -TargetMailbox "User@mail.ru" -TargetFolder "MessageTrackingLog" -LogOnly | select ResultItemsCount
 											if($SM.ResultItemsCount -eq "0"){
-#												$i=0
-#												foreach($Obj in $CsvArray){
-#													if($subject -eq $Obj.MessageSubject){
 													$ListMTL.FocusedItem.backcolor = "black"
 													$ListMTL.FocusedItem.forecolor = "white"
-#													}
-#													$i+=1
-#												}
 											}else{
-#												$i=0
-#												foreach($Obj in $CsvArray){
-#													if($subject -eq $Obj.MessageSubject){
 													$ListMTL.FocusedItem.backcolor = "yellow"
 													$ListMTL.FocusedItem.forecolor = "black"
 #													}
@@ -1146,9 +1110,6 @@ $ListMTL.contextmenu = $Context
 												$CsvArray += $Object
 										        Remove-Variable Object
 										    }
-										#	Write-Host $CsvArray | ft
-										#    Return ,$CsvArray
-#											$successful = @()
 											$recipients = @()
 											$subject = $listMTL.FocusedItem.subitems[6].text
 											$messageid = $ListMTL.FocusedItem.subitems[2].text
@@ -1157,28 +1118,15 @@ $ListMTL.contextmenu = $Context
 											[string[]]$recipients = $recipients.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries) #создает из строкового значения массив
 											$recipients+=$sender
 											foreach ($recipient in $recipients){
-													$SM = Search-Mailbox -Identity $recipient -SearchQuery Subject:"$subject" -TargetMailbox "AdmExc@nornik.ru" -TargetFolder "MessageTrackingLog" -LogOnly | select ResultItemsCount
-#													[system.Windows.Forms.MessageBox]::Show("$SM.ResultItemsCount" , "1")
+													$SM = Search-Mailbox -Identity $recipient -SearchQuery Subject:"$subject" -TargetMailbox "User@mail.ru" -TargetFolder "MessageTrackingLog" -LogOnly | select ResultItemsCount
 												if($SM.ResultItemsCount -eq "0"){
 													[system.Windows.Forms.MessageBox]::Show("$recipient" , "Письма НЕТ!")
-#													$i=0
-#													foreach($Obj in $CsvArray){
-#														if($subject -eq $Obj.MessageSubject){
 															$ListMTL.FocusedItem.backcolor = "black"
 															$ListMTL.FocusedItem.forecolor = "white"
-#														}
-#														$i+=1
-#													}
 												}else{
 													[system.Windows.Forms.MessageBox]::Show("$recipient" , "Есть письмо!")
-#													$i=0
-#													foreach($Obj in $CsvArray){
-#														if($subject -eq $Obj.MessageSubject){
 															$ListMTL.FocusedItem.backcolor = "yellow"
 															$ListMTL.FocusedItem.forecolor = "black"
-#														}
-#														$i+=1
-#													}
 												}
 											}
 											
@@ -1301,7 +1249,6 @@ $textBoxMTLMB.dock = "top"
 $textBoxMTLMB.Location = New-Object System.Drawing.Point(10, 10);    
 $textBoxMTLMB.Size = New-Object System.Drawing.Size(365, 10);    
 $textBoxMTLMB.Name = "textBox0";      
-#$textBoxMTLMB.Text = "user";
 $textBoxMTLMBname = 'Введите пожалуйста имя Пользователя!'
 $textBoxMTLMB.ForeColor = 'LightGray'
 $textBoxMTLMB.Text = $textBoxMTLMBname

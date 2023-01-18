@@ -114,9 +114,9 @@ function Fill-Listad ($Mask = "*") {
 	#$ObjListbox.Items.Clear()
 	$listSA.Items.Clear()
 	$s = $textBox11.Text + "*"
-    $str = Get-ADUser -Filter {SamAccountName -like $s } -Searchbase "DC=npr,DC=nornick,DC=ru" | select SamAccountName
+    $str = Get-ADUser -Filter {SamAccountName -like $s } -Searchbase "DC=domain,DC=ru" | select SamAccountName
 		if($str -eq $null){
-		$str = Get-ADUser -Filter { DisplayName -like $s } -Searchbase "DC=npr,DC=nornick,DC=ru" | select SamAccountName
+		$str = Get-ADUser -Filter { DisplayName -like $s } -Searchbase "DC=domain,DC=ru" | select SamAccountName
 	}
 
 	if ($str -eq $null)

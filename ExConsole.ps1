@@ -503,7 +503,6 @@ $List.add_ItemChecked({
 			$btn5.Enabled = $true
 			$btn8.Enabled = $true
 			$menucopy.Enabled = $true
-#			$menuRemoveR.Enabled = $true
 		}else{
 			$btn1.Enabled = $false
 			$btn2.Enabled = $false
@@ -513,45 +512,24 @@ $List.add_ItemChecked({
 			$btn6.Enabled = $false
 			$btn8.Enabled = $false
 			$menucopy.Enabled = $false
-#			$menuRemoveR.Enabled = $false
 		}
-#			if($list.SelectedItems.Count -eq 1){
-#				$menucopy.Enabled = $true
-#				$menuRemoveR.Enabled = $true
-#			}
 		})
 
-#$ListMTL.add_ItemSelectionChanged({
-#		if($ListMTL.SelectedItems.Count -cge 1){
-#					$ListMTL.add_ItemMouseHover({
-#						if($ListMTL.SelectedItems.Count -cge 1){
 						
 $List.add_ItemSelectionChanged({
 	$List.add_ItemMouseHover({
 		if($list.SelectedItems.Count -cge 1){
 			$menucopy.Enabled = $true
-#			$menuRemoveR.Enabled = $false
-		}else{
-#			$menuRemoveR.Enabled = $true
 		}
 		if($list.CheckedItems.Count -cge 1){
 			$menucopy.Enabled = $true
-#			$menuRemoveR.Enabled = $false
-		}else{
-#			$menuRemoveR.Enabled = $true
 		}
 	})
 		if($list.SelectedItems.Count -cge 1){
 			$menucopy.Enabled = $true
-#			$menuRemoveR.Enabled = $true
-		}else{
-#			$menuRemoveR.Enabled = $false
 		}
 		if($list.CheckedItems.Count -cge 1){
 			$menucopy.Enabled = $true
-#			$menuRemoveR.Enabled = $false
-		}else{
-#			$menuRemoveR.Enabled = $true
 		}
 })
 
@@ -796,7 +774,7 @@ $checkbox1.add_CheckedChanged({
 	{
 	  $comboBoxOU.Items.Clear()
 	  $checkbox2.Checked = $false
-	  $addressOU ="DC=npr,DC=nornick,DC=ru"
+	  $addressOU ="DC=domain,DC=ru"
 	  
 	  if($comboBoxOU.Disposing -contains $comboBoxOU.Items){$OUs = get-ADOrganizationalUnit -SearchBase $addressOU -Filter * -SearchScope OneLevel}
 	  combobox
@@ -813,7 +791,7 @@ $checkbox2.add_CheckedChanged({
 	{
 	  $comboBoxOU.Items.Clear()
 	  $checkbox1.Checked = $false
-	  $addressOU ="OU=ou,DC=contoso,DC=com"
+	  $addressOU ="OU=domain,DC=com"
 	  if($comboBoxOU.Disposing -contains $comboBoxOU.Items){$OUs = get-ADOrganizationalUnit -SearchBase $addressOU -Filter * -SearchScope OneLevel}
 	  combobox
 
@@ -850,8 +828,6 @@ $txtInfo.Text="Подождите..."
 				Get-MoveRequest -TargetDatabase $database -MoveStatus completed | Remove-MoveRequest -Confirm:$false
 			}
 			count-move
-#			$List.Items.Clear()
-#			DB
 		$log = Get-Content $tmp.fullname
 		$txtInfo.Text=$log+"`n"+"`n"
 		Stop-Transcript
@@ -884,23 +860,6 @@ $GroupInside.Controls.Add($btn1);
 											Start-Transcript -Path $tmp.fullname
 									$count=0;
 									$databases = $List.CheckedItems.text
-#									if ($comboBoxOU.Text)
-#									{
-#									foreach($database in $databases){
-#									
-#							
-#										$DBCount=(Get-Mailbox -ResultSize unlimited -OrganizationalUnit $comboBoxOU.Text -Database $database).count
-#								
-#										$count+=$DBCount
-#										if($txtinfo.Text -eq "Подождите..."){
-#											$txtInfo.Text=""
-#										}
-#										$txtInfo.AppendText($database+"="+$DBCount+"`n")
-#										}
-#									}
-#									else
-#									{
-
                                 if ($checkboxMove.checked)
 								{
 									foreach($database in $databases)
@@ -1021,8 +980,8 @@ $GroupInside.Controls.Add($btn6);
 											
 										
 							##############Сравнение с квотой	
-						$FullAccessFromInternetZF = Get-ADGroup "NR-ZF-EX-FullAccessFromInternet" | Select-Object -ExpandProperty DistinguishedName
-										$FullAccessFromInternetGO = Get-ADGroup "MS-HQ-EX-FullAccessFromInternet" | Select-Object -ExpandProperty DistinguishedName
+						$FullAccessFromInternetZF = Get-ADGroup "group" | Select-Object -ExpandProperty DistinguishedName
+										$FullAccessFromInternetGO = Get-ADGroup "group" | Select-Object -ExpandProperty DistinguishedName
 										if(((Get-ADUser $ListMB.Items[$id-1].Subitems[2].Text -Properties memberof).memberof -like $FullAccessFromInternetZF)-or((Get-ADUser $ListMB.Items[$id-1].Subitems[2].Text -Properties memberof).memberof -like $FullAccessFromInternetGO)){
 												$ListMB.Items[$id-1].forecolor = "red"
 											}
@@ -1318,12 +1277,7 @@ $GroupInside.Controls.Add($btn4);
 						$ListMB.Items.Clear()
 						$databases = $List.CheckedItems.text
 						foreach($database in $databases){
-#						$s = "*"
-#						$mail =  [scriptblock]::create("alias -like `"$s`"")
-#						$mailn =  [scriptblock]::create("name -like `"$s`"")
 					    $str = Get-mailbox -Database $database | select PrimarySmtpAddress,Alias,DisplayName,ProhibitSendQuota,database,identity,RecipientTypeDetails,SamAccountName
-#							if($str -eq $null){
-#							$str = Get-mailbox -Database $database -Filter $mailn | select PrimarySmtpAddress,Alias,DisplayName,ProhibitSendQuota,database}
 							    if($str){
 								$id=1
 									foreach ($item in $str) 
@@ -1630,13 +1584,6 @@ $GroupInside.Controls.Add($btn7);
 						#-------------------------------------------------------------------------------------------------------------------------------
 
 #контекстное меню вызывается в Listview
-#$menuRemoveR = New-Object System.Windows.Forms.MenuItem
-#$menuRemoveR.Text = "Очистить запросы - completed"
-#$menuRemoveR.Enabled = $false
-#$menuRemoveR.Add_Click({
-#Remove-Request
-#})
-
 $menumInfUser = New-Object System.Windows.Forms.MenuItem
 $menumInfUser.Text = "Информация о пользователе"
 $menumInfUser.Enabled = $false
@@ -1710,8 +1657,6 @@ $menumDBAccessFromInternet.Text = "Добавить или удалить пол
 $menumDBAccessFromInternet.Enabled = $false
 $menumDBAccessFromInternet.Add_Click({
 $SID = "SID goupr"
-#try
-#{
     $group = Get-ADGroup $SID
 	$user = Get-ADUser $listMB.Items[$listMB.FocusedItem.Index].Subitems[2].Text 
  				if ($listMB.Items[$listMB.FocusedItem.Index].forecolor -eq "red")
@@ -1728,9 +1673,6 @@ $SID = "SID goupr"
 					$listMB.Items[$listMB.FocusedItem.Index].forecolor = "red"
 					[System.Windows.Forms.MessageBox]::Show("Данный пользователь добавлен в группу")
     				}
-#					}
-#catch{[System.Windows.Forms.MessageBox]::Show("Ошибка!")}
-
 
 })
 
@@ -1769,34 +1711,9 @@ $calendar2 = $ListMB.Items[$ListMB.Focuseditem.Index].SubItems[3].Text+":\Кал
 Get-MailboxFolderPermission -Identity $calendar2 | Out-GridView -Title "Доступ к календарю"
 
 })
-#$menumDBAccessSkype = New-Object System.Windows.Forms.MenuItem
-#$menumDBAccessSkype.Text = "Добавить или удалить учетную запись пользователя в Skype"
-#$menumDBAccessSkype.Enabled = $true
-#$menumDBAccessSkype.Add_Click({
-#adddeleteskype
-#})
-#
-#$menumDBDeleteAccessFromInternet = New-Object System.Windows.Forms.MenuItem
-#$menumDBDeleteAccessFromInternet.Text = "Удаление из группы предоставления доступа к корпоративной почте из Интернета"
-#$menumDBDeleteAccessFromInternet.Enabled = $false
-#$menumDBDeleteAccessFromInternet.Add_Click({
-#  #$SID = "S-1-5-21-1427493287-2892074134-283380318-147027"
-#   $SID = "S-1-5-21-1427493287-2892074134-283380318-179654"
-#try
-#{
-#	  $group = Get-ADGroup $SID
-#	  $user = Get-ADUser $listMB.Items[$listMB.FocusedItem.Index].Subitems[2].Text 
-#		Remove-ADGroupMember $group -Member $user -Server "npr.nornick.ru" -Confirm:$false
-#		$ListMB.Items[$ListMB.FocusedItem.Index].forecolor = "black"
-#		[System.Windows.Forms.MessageBox]::Show("Пользователь удален!")
-#}
-#catch{[System.Windows.Forms.MessageBox]::Show("Ошибка!")}
-#})
-
 
 $ContextMenu = New-Object System.Windows.Forms.ContextMenu
 $ContextMenu.MenuItems.AddRange(@($menucopy))
-#$ContextMenu.MenuItems.AddRange(@($menuRemoveR))
 $List.ContextMenu = $ContextMenu
 
 $ContextMenu1 = New-Object System.Windows.Forms.ContextMenu
@@ -1813,8 +1730,6 @@ $ContextMenu1.MenuItems.AddRange(@($menumDBAccessFromInternet))
 $ContextMenu1.MenuItems.AddRange(@($menumAccessCalendar))
 $ContextMenu1.MenuItems.AddRange(@($menumDeleteCalendar)) 
 $ContextMenu1.MenuItems.AddRange(@($menumALLAccesscalendar))
-#$ContextMenu1.MenuItems.AddRange(@($menumDBAccessSkype))
-#$ContextMenu1.MenuItems.AddRange(@($menumDBDeleteAccessFromInternet))
 $listMB.ContextMenu = $ContextMenu1
 #------------------------------------------------------------------------------------------------------------------------------
 
@@ -1854,24 +1769,6 @@ $CopyText1 += ";$CopyText"
 }
 #------------------------------------------------------------------------
 
-#Очищает очередь мигрирования
-#function Remove-Request{
-#		$txtInfo.Text="Подождите..." 
-#		Start-Transcript -Path $tmp.fullname
-#			$databases = $List.FocusedItem.text
-#			foreach($database in $databases){
-#				Get-MoveRequest -TargetDatabase $database -MoveStatus completed | Remove-MoveRequest -Confirm:$false
-#			}
-#			count-move
-##			$List.Items.Clear()
-##			DB
-#		$log = Get-Content $tmp.fullname
-#		$txtInfo.Text=$log+"`n"+"`n"
-#		Stop-Transcript
-#		$txtInfo.AppendText("Готово!")
-#}
-#------------------------------------------------
-
 #приостанавливание перемещения
 function Suspend-Move {
 $txtInfo.Text="Подождите..." 
@@ -1882,7 +1779,6 @@ $txtInfo.Text="Подождите..."
 			ForEach ($alias in $aliass){
 				$alias1 = $alias -replace "[`n]",""
 				Suspend-MoveRequest -Identity $alias1 -Confirm:$false
-#				New-MoveRequest -Identity $smtpaddres1 -TargetDatabase $List.CheckedItems.text -BadItemLimit "200" -priority emergency 
 			}
 				$log = Get-Content $tmp.fullname
 				$txtInfo.Text=$log+"`n"+"`n"
@@ -1901,7 +1797,6 @@ $txtInfo.Text="Подождите..."
 			ForEach ($alias in $aliass){
 				$alias1 = $alias -replace "[`n]",""
 				Resume-MoveRequest -Identity $alias1 -Confirm:$false
-#				New-MoveRequest -Identity $smtpaddres1 -TargetDatabase $List.CheckedItems.text -BadItemLimit "200" -priority emergency 
 			}
 				$log = Get-Content $tmp.fullname
 				$txtInfo.Text=$log+"`n"+"`n"
@@ -1980,19 +1875,5 @@ $fromAddPermission.Update()
 $fromAddPermission.Refresh()
 $fromAddPermission.ShowDialog()
 }
-
-##Добавление или удаление учетной записи в skype
-#function adddeleteskype
-#{
-#  $fromAddPermission.Text ="Добавление и удаление учетной записи Skype"
-#  $indexform = 3
-#  $buttonadd.Text = "Добавить или удалить учетную запись в skype"
-#  $buttonadd.Enabled = $false
-#  $fromAddPermission.Update()
-#  $fromAddPermission.Refresh()
-#  $fromAddPermission.ShowDialog()
-#  
-#}
-
 
 $Exbody.ShowDialog()
